@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>mk体育 – 快速检索体育资讯与动态</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f6fafb;
+            color: #1f2c33;
+            line-height: 1.55;
+            padding: 0 20px 20px;
+        }
+
+        .page {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 24px 0 40px;
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            background: linear-gradient(145deg, #0a3b40 0%, #0b5b61 70%, #14777a 100%);
+            border-radius: 28px;
+            padding: 48px 32px 42px;
+            margin-bottom: 48px;
+            color: #eaf6f4;
+            box-shadow: 0 12px 26px -8px rgba(8, 60, 64, 0.25);
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            max-width: 700px;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+        .hero h1 span {
+            background: #abe0dc;
+            color: #073b3f;
+            padding: 0 8px 2px 8px;
+            display: inline-block;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 660px;
+            margin-bottom: 18px;
+            opacity: 0.92;
+            color: #dcf0ef;
+        }
+        .hero .tagline {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            padding: 8px 22px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            color: #d2edea;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(2px);
+        }
+
+        /* ---------- 网格卡片 ---------- */
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 520;
+            margin: 0 0 28px 0;
+            color: #13484b;
+            border-left: 6px solid #1fa69e;
+            padding-left: 18px;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 26px 20px 28px;
+            box-shadow: 0 3px 14px rgba(0, 60, 60, 0.06);
+            transition: box-shadow 0.2s, transform 0.15s;
+            border: 1px solid #e3f0ee;
+        }
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(18, 110, 110, 0.10);
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 550;
+            margin-bottom: 12px;
+            color: #083d41;
+        }
+        .card h3 .icon {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: #d3f0ed;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 32px;
+            margin-right: 10px;
+            color: #08565b;
+            font-size: 1.2rem;
+        }
+        .card p {
+            color: #2f4a4e;
+            font-size: 0.97rem;
+            margin-top: 4px;
+        }
+
+        /* ---------- 说明区 + FAQ 摘要 ---------- */
+        .section-mixed {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin-bottom: 52px;
+        }
+        .explain-box {
+            flex: 1.3;
+            min-width: 280px;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 30px;
+            box-shadow: 0 3px 14px rgba(0, 60, 60, 0.04);
+            border: 1px solid #e0efec;
+        }
+        .explain-box h2 {
+            font-size: 1.5rem;
+            font-weight: 530;
+            margin-bottom: 18px;
+            color: #084a4e;
+        }
+        .explain-box p {
+            margin-bottom: 16px;
+            color: #2a474b;
+        }
+        .explain-box a {
+            color: #0b6d6b;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px dashed #79bfba;
+            padding-bottom: 1px;
+        }
+        .explain-box a:hover {
+            border-bottom-style: solid;
+            color: #043e40;
+        }
+
+        .faq-summary {
+            flex: 1;
+            min-width: 230px;
+            background: #e4f4f0;
+            border-radius: 28px;
+            padding: 28px 26px;
+            border: 1px solid #b8dbd5;
+        }
+        .faq-summary h3 {
+            font-size: 1.2rem;
+            font-weight: 550;
+            color: #074144;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .faq-item {
+            margin-bottom: 16px;
+        }
+        .faq-item strong {
+            display: block;
+            font-weight: 550;
+            margin-bottom: 3px;
+            color: #0b4f52;
+            font-size: 0.95rem;
+        }
+        .faq-item p {
+            color: #275558;
+            font-size: 0.92rem;
+            margin-left: 6px;
+        }
+
+        /* ---------- 底部链接 ---------- */
+        .footer-links {
+            border-top: 1px solid #c8dfdb;
+            padding-top: 28px;
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 18px 28px;
+        }
+        .footer-links .brand {
+            font-size: 1.1rem;
+            font-weight: 450;
+            color: #175c5e;
+        }
+        .footer-links .brand a {
+            color: #0b6b68;
+            text-decoration: none;
+            font-weight: 520;
+            border-bottom: 1px solid #97cec9;
+        }
+        .footer-links .brand a:hover {
+            border-bottom-color: #043e40;
+        }
+        .footer-links .minor {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 28px;
+            color: #3c6a6b;
+            font-size: 0.9rem;
+        }
+        .footer-links .minor a {
+            color: #286669;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+        .footer-links .minor a:hover {
+            border-bottom: 1px solid #48a199;
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media (max-width: 700px) {
+            body { padding: 0 12px 16px; }
+            .hero { padding: 32px 22px; border-radius: 22px; }
+            .hero h1 { font-size: 1.9rem; }
+            .hero p { font-size: 1rem; }
+            .section-title { font-size: 1.4rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .section-mixed { flex-direction: column; }
+            .explain-box { padding: 24px 20px; }
+            .faq-summary { padding: 22px 20px; }
+            .footer-links { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 450px) {
+            .hero h1 { font-size: 1.55rem; }
+            .hero { padding: 28px 18px; }
+            .card { padding: 20px 16px; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <!-- HERO 区 -->
+    <div class="hero">
+        <h1>一眼看透 <span>mk体育</span> 在搜什么</h1>
+        <p>想快速识别这个网站是做什么的？不用猜。mksearch.com.cn 汇聚体育赛事、队伍资料、赛果速报，帮你从海量信息里找到可信来源。</p>
+        <div class="tagline">⚡ 体育检索 · 简洁直达</div>
+    </div>
+
+    <!-- 优势区（网格卡片） -->
+    <h2 class="section-title">为什么先用 mk体育 找信息</h2>
+    <div class="card-grid">
+        <div class="card">
+            <h3><span class="icon">🏀</span> 赛事覆盖广</h3>
+            <p>篮球、足球、网球、电竞及更多项目，热门联赛与地区杯赛都能快速定位到相关内容页。</p>
+        </div>
+        <div class="card">
+            <h3><span class="icon">📋</span> 结果直给，少跳转</h3>
+            <p>站内聚合摘要与标记，不用反复翻页。你关心的是信息，不是广告和弹窗。</p>
+        </div>
+        <div class="card">
+            <h3><span class="icon">🔍</span> 搜索逻辑清晰</h3>
+            <p>输入队伍、球员或比赛关键词，系统优先展示近期动态与官方数据源，省去筛选成本。</p>
+        </div>
+        <div class="card">
+            <h3><span class="icon">📱</span> 移动端友好</h3>
+            <p>手机浏览器直接使用，卡片布局和按钮都适合单手操作，等车、休息时随手查。</p>
+        </div>
+    </div>
+
+    <!-- 说明区 + FAQ 摘要（左右并列） -->
+    <div class="section-mixed">
+        <div class="explain-box">
+            <h2>用 mk体育 之前，先了解这些</h2>
+            <p>很多人第一次打开 <a href="https://mksearch.com.cn">mk体育</a> 会好奇：这到底是一个资讯站还是搜索引擎？其实它更像一个体育专用的发现入口——你输入想了解的比赛或队伍，它帮你整理出相关的页面摘要、来源链接和最新消息。</p>
+            <p>比起漫无目的地在搜索引擎里试关键词，这里的结果更集中。无论你想回顾昨晚的英超比分，还是查某个球员的转会传闻，都能在几秒内找到有价值的条目。</p>
+            <p>网站本身不生产独家报道，但会聚合多家媒体和官方渠道的内容，并标注来源。你可以把它当作判断信息可信度的起点。</p>
+        </div>
+        <div class="faq-summary">
+            <h3>❓ 常见疑惑 · 快速解答</h3>
+            <div class="faq-item">
+                <strong>这网站需要注册吗？</strong>
+                <p>不需要。直接搜索就能看到结果，没有任何登录门槛。</p>
+            </div>
+            <div class="faq-item">
+                <strong>搜出来的链接靠谱吗？</strong>
+                <p>结果会优先收录主流媒体及球队官方渠道，并带有来源标识，你可以自行判断。</p>
+            </div>
+            <div class="faq-item">
+                <strong>移动端和电脑端一样吗？</strong>
+                <p>核心功能一致，但手机界面针对小屏做了简化，操作更流畅。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部链接区 -->
+    <div class="footer-links">
+        <div class="brand">
+            <a href="https://mksearch.com.cn">mk体育</a> · 体育信息检索工具
+        </div>
+        <div class="minor">
+            <span>内容来源均标注出处</span>
+            <span>建议反馈 / 联系</span>
+            <a href="#">隐私说明</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
