@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>日常数据查询 · 捷报比分</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #f5f7fc;
+      color: #1e202b;
+      line-height: 1.6;
+    }
+    /* 深色头图 */
+    .hero {
+      background: linear-gradient(145deg, #0e121b 0%, #1a202c 100%);
+      color: #eef0f6;
+      padding: 4rem 2rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #f5f7fc;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.8;
+      font-weight: 300;
+    }
+    .hero-tag {
+      display: inline-block;
+      margin-top: 1.6rem;
+      background: rgba(255,255,255,0.08);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: #bcc8e0;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* 主要内容区（浅色正文） */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.2rem 1.5rem 3rem;
+    }
+
+    /* 信息卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 6px rgba(0, 20, 40, 0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.04), 0 4px 12px rgba(0, 20, 50, 0.06);
+    }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #0f141f;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #3f465a;
+      line-height: 1.5;
+    }
+
+    /* 适合人群卡片区 (同一网格, 略作样式区分) */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.8rem 0;
+    }
+    .audience-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.6rem 1.3rem;
+      border-left: 6px solid #e1e8f0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .audience-card:nth-child(1) { border-left-color: #4a7cf7; }
+    .audience-card:nth-child(2) { border-left-color: #23a094; }
+    .audience-card:nth-child(3) { border-left-color: #d97706; }
+    .audience-card:nth-child(4) { border-left-color: #9b59b6; }
+    .audience-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #181e2b;
+    }
+    .audience-card p {
+      font-size: 0.9rem;
+      color: #3e455b;
+    }
+
+    /* 自然链接段落区 (延伸阅读) */
+    .link-section {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 2rem 2rem 2.2rem;
+      margin: 2.5rem 0 3rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+    }
+    .link-section h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #0a0f1c;
+    }
+    .link-section p {
+      font-size: 1rem;
+      color: #2a3041;
+      max-width: 700px;
+    }
+    .link-section a {
+      color: #2563eb;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .link-section a:hover {
+      color: #1d4ed8;
+      text-decoration-thickness: 2px;
+    }
+
+    /* 常见查询摘要 (FAQ风格) */
+    .faq-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0 1.2rem;
+    }
+    .faq-item {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.2rem 1.5rem;
+      flex: 1 1 200px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #eef2f9;
+    }
+    .faq-item strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+      color: #17212d;
+    }
+    .faq-item span {
+      font-size: 0.9rem;
+      color: #47516b;
+    }
+
+    /* 提示条 */
+    .tip-bar {
+      background: #eaf0fe;
+      border-radius: 60px;
+      padding: 0.8rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #1e2b4a;
+      font-size: 0.9rem;
+      margin: 1.5rem 0 0.5rem;
+      border: 1px solid #d6e0f5;
+    }
+    .tip-bar::before {
+      content: '💡';
+      font-size: 1.1rem;
+    }
+
+    /* 页脚 */
+    footer {
+      border-top: 1px solid #e3e8f2;
+      text-align: center;
+      padding: 2rem 1.5rem 2.5rem;
+      color: #5a627a;
+      font-size: 0.85rem;
+      background: #f5f7fc;
+    }
+    footer a {
+      color: #2f3b66;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 640px) {
+      .hero-title { font-size: 2rem; }
+      .hero { padding: 3rem 1.2rem 2.8rem; }
+      .card-grid { gap: 1.2rem; }
+      .audience-grid { gap: 1rem; }
+      .link-section { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <h1 class="hero-title">比分对照 · 日常查询</h1>
+    <p class="hero-sub">赛果、数据、记录 —— 随手翻阅，心中有底</p>
+    <span class="hero-tag">📋 常用参考 · 捷报比分</span>
+  </header>
+
+  <main class="container">
+    <!-- 主视觉卡片：用途场景 -->
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">⚽</span>
+        <h3>赛果对照</h3>
+        <p>赛事结束后快速核对比分，方便做记录或和朋友讨论时确认数据。</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📊</span>
+        <h3>走势参考</h3>
+        <p>同一联赛或杯赛的连续场次，看一眼积分、进球与胜负分布。</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <h3>延伸查阅</h3>
+        <p>从单场比分出发，查阅历史交锋、近期战绩等关联信息。</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📱</span>
+        <h3>移动速览</h3>
+        <p>碎片时间里打开页面，快速定位关注的场次及比分变化。</p>
+      </div>
+    </div>
+
+    <!-- 适合人群 小卡片 -->
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h4>📌 经常需要查比分的球迷</h4>
+        <p>不论主队客队，想第一时间确认结果，而不被无关信息干扰。</p>
+      </div>
+      <div class="audience-card">
+        <h4>📌 数据爱好者</h4>
+        <p>喜欢看进球时间、半全场、红黄牌等细节，做自己的小统计。</p>
+      </div>
+      <div class="audience-card">
+        <h4>📌 写赛评或做笔记</h4>
+        <p>需要引用准确比分、比赛日期，方便串联自己的观点。</p>
+      </div>
+      <div class="audience-card">
+        <h4>📌 日常闲聊派</h4>
+        <p>看球后和朋友聊起来，随手翻出比分和关键事件，聊天更有料。</p>
+      </div>
+    </div>
+
+    <!-- 自然链接段落：延伸阅读 & 嵌入链接“捷报比分” -->
+    <div class="link-section">
+      <h2>🔗 从一场比赛延伸到更多</h2>
+      <p>
+        很多时候我们只是想确认某场凌晨的比赛结果，或者对比两支球队最近五次交手记录。
+        如果有一个地方能同时呈现比分、赛程和短期走势，日常查询就会方便很多。
+        无论是联赛、杯赛还是友谊赛，你都可以在 <a href="https://pro-nowscore.com">捷报比分</a> 
+        找到清晰的数据排列，从单场比分延伸到更多关联信息，不用在多个页面之间来回切换。
+      </p>
+      <p style="margin-top: 1.2rem;">
+        不需要复杂的注册或订阅，打开页面就是赛果列表。如果你想了解某个联赛的整体节奏，
+        比如进球分布、近期胜负趋势，也可以在这里对照查看。
+      </p>
+    </div>
+
+    <!-- FAQ摘要 / 常见查询 -->
+    <h3 style="font-weight: 600; font-size: 1.2rem; margin: 2rem 0 0.8rem; color: #121826;">📌 日常查询时可能关心的点</h3>
+    <div class="faq-mini">
+      <div class="faq-item">
+        <strong>比赛完多久能看到比分？</strong>
+        <span>通常终场哨响后几分钟内更新，杯赛淘汰赛加时点球也会跟进。</span>
+      </div>
+      <div class="faq-item">
+        <strong>可以只看某个联赛吗？</strong>
+        <span>支持按赛事筛选，英超、西甲、意甲、德甲、法甲以及日韩、巴西等联赛都可单独查看。</span>
+      </div>
+      <div class="faq-item">
+        <strong>比分页面包含哪些信息？</strong>
+        <span>主客队、进球、半场比分、红黄牌、换人、比赛时间轴等基础要素。</span>
+      </div>
+      <div class="faq-item">
+        <strong>手机上看方便吗？</strong>
+        <span>页面自适应，手机浏览器直接打开，列表和卡片布局都能正常显示。</span>
+      </div>
+    </div>
+
+    <!-- 小提示 -->
+    <div class="tip-bar">
+      试着从一场熟悉的比赛开始，慢慢就会发现对照数据的乐趣
+    </div>
+  </main>
+
+  <footer>
+    <p style="max-width: 600px; margin: 0 auto;">
+      页面仅为信息展示与参考用途，数据均来自公开渠道。日常查询、对照、延伸阅读 —— 
+      <a href="https://pro-nowscore.com" style="text-decoration: underline; font-weight: 500;">捷报比分</a> 提供结构化的赛果呈现。
+    </p>
+    <p style="margin-top: 0.7rem; color: #6f7892;">© 内容卡片 · 简洁查询</p>
+  </footer>
+</body>
+</html>
